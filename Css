@@ -25,6 +25,7 @@ button {
   padding: 15px;
   font-size: 18px;
   cursor: pointer;
+  background-color: red; /* Change button color to red */
 }
 
 button.operator {
