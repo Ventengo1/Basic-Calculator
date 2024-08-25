@@ -21,7 +21,8 @@ buttons.forEach((button) => {
       buttonValue === "-" ||
       buttonValue === "*" ||
       buttonValue === "/" ||
-      buttonValue === "^"
+      buttonValue === "^" ||
+      buttonValue === "√"
     ) {
       if (previousInput !== "") {
         calculate();
@@ -56,6 +57,9 @@ function calculate() {
         parseFloat(previousInput),
         parseFloat(currentInput)
       );
+      break;
+    case "√":
+      resultValue = Math.sqrt(parseFloat(currentInput));
       break;
     default:
       break;
