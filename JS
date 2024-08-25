@@ -22,7 +22,9 @@ buttons.forEach((button) => {
       buttonValue === "*" ||
       buttonValue === "/" ||
       buttonValue === "^" ||
-      buttonValue === "√"
+      buttonValue === "√" ||
+      buttonValue === "%" ||
+      buttonValue === "←"
     ) {
       if (previousInput !== "") {
         calculate();
@@ -70,6 +72,16 @@ function calculate() {
         alert("Invalid root index.");
       }
       break;
+    case "%":
+      resultValue =
+        parseFloat(previousInput) * (parseFloat(currentInput) / 100);
+      break;
+    case "←":
+      if (currentInput.length > 0) {
+        currentInput = currentInput.slice(0, -1);
+      }
+      updateResult();
+      break;
     default:
       break;
   }
@@ -89,4 +101,3 @@ function clear() {
 function updateResult() {
   result.value = currentInput;
 }
-
