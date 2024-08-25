@@ -5,62 +5,74 @@ let currentInput = "";
 let previousInput = "";
 let operator = "";
 
-buttons.forEach(button => {
-    button.addEventListener("click", () => {
-        const buttonValue = button.value;
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const buttonValue = button.value;
 
-        if (buttonValue === "=") {
-            calculate();
-        } else if (buttonValue === "C") {
-            clear();
-        } else if (buttonValue === "." && !currentInput.includes(".")) {
-            currentInput += buttonValue;
-            updateResult();
-        } else if (buttonValue === "+" || buttonValue === "-" || buttonValue === "*" || buttonValue === "/") {
-            if (previousInput !== "") {
-                calculate();
-            }
-            operator = buttonValue;
-            previousInput = currentInput;
-            currentInput = "";
-        } else {
-            currentInput += buttonValue;
-            updateResult();
-        }
-    });
+    if (buttonValue === "=") {
+      calculate();
+    } else if (buttonValue === "C") {
+      clear();
+    } else if (buttonValue === "." && !currentInput.includes(".")) {
+      currentInput += buttonValue;
+      updateResult();
+    } else if (
+      buttonValue === "+" ||
+      buttonValue === "-" ||
+      buttonValue === "*" ||
+      buttonValue === "/" ||
+      buttonValue === "^"
+    ) {
+      if (previousInput !== "") {
+        calculate();
+      }
+      operator = buttonValue;
+      previousInput = currentInput;
+      currentInput = "";
+    } else {
+      currentInput += buttonValue;
+      updateResult();
+    }
+  });
 });
 
 function calculate() {
-    let resultValue;
-    switch (operator) {
-        case "+":
-            resultValue = parseFloat(previousInput) + parseFloat(currentInput);
-            break;
-        case "-":
-            resultValue = parseFloat(previousInput) - parseFloat(currentInput);
-            break;
-        case "*":
-            resultValue = parseFloat(previousInput) * parseFloat(currentInput);
-            break;
-        case "/":
-            resultValue = parseFloat(previousInput) / parseFloat(currentInput);
-            break;
-        default:
-            break;
-    }
-    currentInput = resultValue.toString();
-    previousInput = "";
-    operator = "";
-    updateResult();
+  let resultValue;
+  switch (operator) {
+    case "+":
+      resultValue = parseFloat(previousInput) + parseFloat(currentInput);
+      break;
+    case "-":
+      resultValue = parseFloat(previousInput) - parseFloat(currentInput);
+      break;
+    case "*":
+      resultValue = parseFloat(previousInput) * parseFloat(currentInput);
+      break;
+    case "/":
+      resultValue = parseFloat(previousInput) / parseFloat(currentInput);
+      break;
+    case "^":
+      resultValue = Math.pow(
+        parseFloat(previousInput),
+        parseFloat(currentInput)
+      );
+      break;
+    default:
+      break;
+  }
+  currentInput = resultValue.toString();
+  previousInput = "";
+  operator = "";
+  updateResult();
 }
 
 function clear() {
-    currentInput = "";
-    previousInput = "";
-    operator = "";
-    updateResult();
+  currentInput = "";
+  previousInput = "";
+  operator = "";
+  updateResult();
 }
 
 function updateResult() {
-    result.value = currentInput;
+  result.value = currentInput;
 }
