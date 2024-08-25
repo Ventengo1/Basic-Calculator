@@ -1,5 +1,6 @@
 const result = document.getElementById("result");
 const buttons = document.querySelectorAll("button");
+const modeSelect = document.getElementById("mode-select");
 
 let currentInput = "";
 let previousInput = "";
@@ -24,7 +25,10 @@ buttons.forEach((button) => {
       buttonValue === "^" ||
       buttonValue === "√" ||
       buttonValue === "%" ||
-      buttonValue === "←"
+      buttonValue === "←" ||
+      buttonValue === "sin" ||
+      buttonValue === "cos" ||
+      buttonValue === "tan"
     ) {
       if (previousInput !== "") {
         calculate();
@@ -81,6 +85,27 @@ function calculate() {
         currentInput = currentInput.slice(0, -1);
       }
       updateResult();
+      break;
+    case "sin":
+      resultValue = Math.sin(
+        modeSelect.value === "degrees"
+          ? (parseFloat(currentInput) * Math.PI) / 180
+          : parseFloat(currentInput)
+      );
+      break;
+    case "cos":
+      resultValue = Math.cos(
+        modeSelect.value === "degrees"
+          ? (parseFloat(currentInput) * Math.PI) / 180
+          : parseFloat(currentInput)
+      );
+      break;
+    case "tan":
+      resultValue = Math.tan(
+        modeSelect.value === "degrees"
+          ? (parseFloat(currentInput) * Math.PI) / 180
+          : parseFloat(currentInput)
+      );
       break;
     default:
       break;
