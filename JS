@@ -59,7 +59,16 @@ function calculate() {
       );
       break;
     case "√":
-      resultValue = Math.sqrt(parseFloat(currentInput));
+      // Prompt the user for the root index
+      const rootIndex = prompt("Enter the root index:");
+      if (rootIndex !== null && rootIndex !== "") {
+        resultValue = Math.pow(
+          parseFloat(currentInput),
+          1 / parseFloat(rootIndex)
+        );
+      } else {
+        alert("Invalid root index.");
+      }
       break;
     default:
       break;
@@ -80,3 +89,4 @@ function clear() {
 function updateResult() {
   result.value = currentInput;
 }
+
