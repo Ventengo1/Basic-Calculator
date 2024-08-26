@@ -1,139 +1,100 @@
 const result = document.getElementById("result");
 const buttons = document.querySelectorAll("button");
 const modeSelect = document.getElementById("mode-select");
+const themeSelect = document.getElementById("theme-select");
 const historyList = document.getElementById("historyList");
 
 let currentInput = "";
 let previousInput = "";
 let operator = "";
 
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const buttonValue = button.value;
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        const buttonValue = button.value;
 
-    if (buttonValue === "=") {
-      calculate();
-    } else if (buttonValue === "C") {
-      clear();
-    } else if (buttonValue === "." && !currentInput.includes(".")) {
-      currentInput += buttonValue;
-      updateResult();
-    } else if (
-      buttonValue === "+" ||
-      buttonValue === "-" ||
-      buttonValue === "*" ||
-      buttonValue === "/" ||
-      buttonValue === "^" ||
-      buttonValue === "√" ||
-      buttonValue === "%" ||
-      buttonValue === "←" ||
-      buttonValue === "sin" ||
-      buttonValue === "cos" ||
-      buttonValue === "tan"
-    ) {
-      if (previousInput !== "") {
-        calculate();
-      }
-      operator = buttonValue;
-      previousInput = currentInput;
-      currentInput = "";
-    } else {
-      currentInput += buttonValue;
-      updateResult();
-    }
-  });
+        if (buttonValue === "=") {
+            calculate();
+        } else if (buttonValue === "C") {
+            clear();
+        } else if (buttonValue === "." && !currentInput.includes(".")) {
+            currentInput += buttonValue;
+            updateResult();
+        } else if (buttonValue === "+" || buttonValue === "-" || buttonValue === "*" || buttonValue === "/" || buttonValue === "^" || buttonValue === "√" || buttonValue === "%" || buttonValue === "←" || buttonValue === "sin" || buttonValue === "cos" || buttonValue === "tan") {
+            if (previousInput !== "") {
+                calculate();
+            }
+            operator = buttonValue;
+            previousInput = currentInput;
+            currentInput = "";
+        } else {
+            currentInput += buttonValue;
+            updateResult();
+        }
+    });
 });
 
 function calculate() {
-  let resultValue;
-  switch (operator) {
-    case "+":
-      resultValue = parseFloat(previousInput) + parseFloat(currentInput);
-      break;
-    case "-":
-      resultValue = parseFloat(previousInput) - parseFloat(currentInput);
-      break;
-    case "*":
-      resultValue = parseFloat(previousInput) * parseFloat(currentInput);
-      break;
-    case "/":
-      resultValue = parseFloat(previousInput) / parseFloat(currentInput);
-      break;
-    case "^":
-      resultValue = Math.pow(
-        parseFloat(previousInput),
-        parseFloat(currentInput)
-      );
-      break;
-    case "√":
-      // Prompt the user for the root index
-      const rootIndex = prompt("Enter the root index:");
-      if (rootIndex !== null && rootIndex !== "") {
-        resultValue = Math.pow(
-          parseFloat(currentInput),
-          1 / parseFloat(rootIndex)
-        );
-      } else {
-        alert("Invalid root index.");
-      }
-      break;
-    case "%":
-      resultValue =
-        parseFloat(previousInput) * (parseFloat(currentInput) / 100);
-      break;
-    case "←":
-      if (currentInput.length > 0) {
-        currentInput = currentInput.slice(0, -1);
-      }
-      updateResult();
-      break;
-    case "sin":
-      resultValue = Math.sin(
-        modeSelect.value === "degrees"
-          ? (parseFloat(currentInput) * Math.PI) / 180
-          : parseFloat(currentInput)
-      );
-      break;
-    case "cos":
-      resultValue = Math.cos(
-        modeSelect.value === "degrees"
-          ? (parseFloat(currentInput) * Math.PI) / 180
-          : parseFloat(currentInput)
-      );
-      break;
-    case "tan":
-      resultValue = Math.tan(
-        modeSelect.value === "degrees"
-          ? (parseFloat(currentInput) * Math.PI) / 180
-          : parseFloat(currentInput)
-      );
-      break;
-    default:
-      break;
-  }
-  currentInput = resultValue.toString();
-  previousInput = "";
-  operator = "";
-  updateResult();
+    let resultValue;
+    switch (operator) {
+        case "+":
+            resultValue = parseFloat(previousInput) + parseFloat(currentInput);
+            break;
+        case "-":
+            resultValue = parseFloat(previousInput) - parseFloat(currentInput);
+            break;
+        case "*":
+            resultValue = parseFloat(previousInput) * parseFloat(currentInput);
+            break;
+        case "/":
+            resultValue = parseFloat(previousInput) / parseFloat(currentInput);
+            break;
+        case "^":
+            resultValue = Math.pow(parseFloat(previousInput), parseFloat(currentInput));
+            break;
+        case "√":
+            // Prompt the user for the root index
+            const rootIndex = prompt("Enter the root index:");
+            if (rootIndex !== null && rootIndex !== "") {
+                resultValue = Math.pow(parseFloat(currentInput), 1 / parseFloat(rootIndex));
+            } else {
+                alert("Invalid root index.");
+            }
+            break;
+        case "%":
+            resultValue = parseFloat(previousInput) * (parseFloat(currentInput) / 100);
+            break;
+        case "←":
+            if (currentInput.length > 0) {
+                currentInput = currentInput.slice(0, -1);
+            }
+            updateResult();
+            break;
+        case "sin":
+            resultValue = Math.sin(modeSelect.value === "degrees" ? (parseFloat(currentInput) * Math.PI) / 180 : parseFloat(currentInput));
+            break;
+        case "cos":
+            resultValue = Math.cos(modeSelect.value === "degrees" ? (parseFloat(currentInput) * Math.PI) / 180 : parseFloat(currentInput));
+            break;
+        case "tan":
+            resultValue = Math.tan(modeSelect.value === "degrees" ? (parseFloat(currentInput) * Math.PI) / 180 : parseFloat(currentInput));
+            break;
+        default:
+            break;
+    }
+    currentInput = resultValue.toString();
+    previousInput = "";
+    operator = "";
+    updateResult();
 
-  // Add the calculation to the history
-  const historyItem = document.createElement("li");
-  historyItem.textContent = `${previousInput} ${operator} ${currentInput} = ${resultValue}`;
-  historyList.insertBefore(historyItem, historyList.firstChild);
+    // Add the calculation to the history
+    const historyItem = document.createElement("li");
+    historyItem.textContent = `${previousInput} ${operator} ${currentInput} = ${resultValue}`;
+    historyList.insertBefore(historyItem, historyList.firstChild);
 
-  // Limit the history to 5 items
-  if (historyList.children.length > 5) {
-    historyList.removeChild(historyList.lastChild);
-  }
+    // Limit the history to 5 items
+    if (historyList.children.length > 5) {
+        historyList.removeChild(historyList.lastChild);
+    }
 }
 
 function clear() {
-  currentInput = "";
-  previousInput = "";
-  operator = "";
-  updateResult();
-}
-
-function updateResult() {
-  result.value = currentInput;
-}
