@@ -1,3 +1,7 @@
+body {
+  background-color: #e0ffff; /* Light blue background color for the entire website */
+}
+
 .calculator {
   width: 250px;
   margin: 0 auto;
@@ -40,4 +44,21 @@ button.equal {
 button.clear {
   background-color: #ff6347;
   color: #fff;
+}
+
+.history {
+  margin-top: 20px;
+}
+
+#historyList {
+  list-style: none;
+  padding: 0;
+}
+
+#historyList li {
+  margin-bottom: 5px;
+}
+
+#mode-select {
+  margin-right: 10px;
 }
