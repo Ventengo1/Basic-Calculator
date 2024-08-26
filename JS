@@ -1,6 +1,7 @@
 const result = document.getElementById("result");
 const buttons = document.querySelectorAll("button");
 const modeSelect = document.getElementById("mode-select");
+const historyList = document.getElementById("historyList");
 
 let currentInput = "";
 let previousInput = "";
@@ -114,6 +115,16 @@ function calculate() {
   previousInput = "";
   operator = "";
   updateResult();
+
+  // Add the calculation to the history
+  const historyItem = document.createElement("li");
+  historyItem.textContent = `${previousInput} ${operator} ${currentInput} = ${resultValue}`;
+  historyList.insertBefore(historyItem, historyList.firstChild);
+
+  // Limit the history to 5 items
+  if (historyList.children.length > 5) {
+    historyList.removeChild(historyList.lastChild);
+  }
 }
 
 function clear() {
